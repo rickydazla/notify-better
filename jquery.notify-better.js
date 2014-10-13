@@ -1,5 +1,5 @@
 /* ===========================================================
- * jquery-notify-better.js v1
+ * jquery-notify-better.js v1.0.1
  * ===========================================================
  * Copyright 2013 Pete Rojwongsuriya.
  * http://www.thepetedesign.com
@@ -10,6 +10,10 @@
  *
  * Credit: Remy Sharp for the Dynamic Favicon, Jeff B from StackOverflow for AbbrNum function
  * https://github.com/peachananr/notify-better
+ *
+ * Changelog:
+ *
+ * 1.0.1    Fixed href URL when favicon is loaded from a subdirectory 
  *
  * ========================================================== */
 
@@ -86,6 +90,7 @@
                 ctx,
                 img = document.createElement('img'),
                 link = document.getElementById(settings.updateFavicon.id).cloneNode(true);
+                link_href = document.getElementById(settings.updateFavicon.id).href;
             if (fx > 99) fx = 99
             if (canvas.getContext) {
               canvas.height = canvas.width = 16;
@@ -196,7 +201,7 @@
                 $("<link id='new-favicon' type='image/x-icon' href='" + canvas.toDataURL('image/png') + "' rel='shortcut icon'>").appendTo("head")
                 
               };
-              img.src = 'favicon.png';
+              img.src = link_href;
             }
           }
         };
@@ -207,7 +212,7 @@
         settings.overrideAjax()
       }else {
         $.ajax({
-          url: settings.url,
+          url: settings.url
         }).done(function(data, textStatus, jqXHR) {
           titleclear();
           notif = eval(data)
